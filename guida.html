@@ -5,144 +5,269 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Guida Sentinel Aula</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body { font-size: 18px; }
-    .g { width: min(100% - 32px, 720px); margin: 32px auto 90px; }
-    .g h1 { font-size: clamp(2rem, 6vw, 2.8rem); margin: 0 0 .3rem; }
-    .g .intro { font-size: 1.15rem; color: #d6d6dc; margin: 0 0 1.6rem; }
-    .g .parte { margin: 2.4rem 0 .8rem; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
-    .p { display: grid; grid-template-columns: 54px 1fr; gap: 16px; background: var(--surface); border: 1px solid var(--line);
-         border-radius: 14px; padding: 18px; margin: 12px 0; }
-    .n { width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: #17150d; display: grid; place-items: center;
-         font-size: 1.5rem; font-weight: 800; }
-    .p h2 { margin: .2rem 0 .5rem; font-size: 1.2rem; }
-    .p p { margin: .45rem 0; }
-    .p ul { margin: .4rem 0; padding-left: 1.2rem; }
-    .p li { margin: .35rem 0; }
-    .b { display: inline-block; padding: 1px 9px; border-radius: 6px; background: #2a2a31; border: 1px solid #44444d; font-weight: 650; color: #fff; white-space: nowrap; }
-    .vai { display: inline-block; margin: .3rem 0; padding: 10px 18px; border-radius: 10px; background: var(--accent); color: #17150d !important;
-           font-weight: 750; text-decoration: none; }
-    .vai:hover { background: #ffda69; }
-    .nota { color: var(--muted); font-size: .95rem; }
-    .att { border-left: 4px solid var(--accent); padding: 6px 14px; margin: .6rem 0; color: #e6e6ea; }
-    code { font-family: var(--mono); background: #202026; padding: 1px 6px; border-radius: 5px; }
-    @media (max-width: 520px) { .p { grid-template-columns: 1fr; } }
+    /* Pensata per chi legge con fatica: carattere Lexend, testo grande, righe corte e ariose,
+       fondo color crema invece del bianco puro, niente corsivo né maiuscolo, una sola azione evidenziata per riga. */
+    :root {
+      --fondo: #f7f2e7; --carta: #fffdf8; --testo: #1f1f24; --tenue: #5b5b66; --riga: #e3dccb;
+      --giallo: #ffd84d; --giallo-scuro: #e0b400; --verde: #2f8a4c; --verde-chiaro: #e3f3e8; --rosso: #b3261e;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--fondo); color: var(--testo);
+           font: 400 20px/1.75 Lexend, "Segoe UI", system-ui, sans-serif; letter-spacing: .01em; word-spacing: .06em; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid #1f5fbf; outline-offset: 3px; }
+    .g { width: min(100% - 28px, 680px); margin: 0 auto 120px; }
+
+    /* Testata con avanzamento */
+    .testa { position: sticky; top: 0; z-index: 5; background: var(--fondo); border-bottom: 2px solid var(--riga); }
+    .testa .dentro { width: min(100% - 28px, 680px); margin: 0 auto; padding: 12px 0; display: flex; align-items: center; gap: 14px; }
+    .testa strong { font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
+    .barra { flex: 1; height: 12px; border-radius: 99px; background: var(--riga); overflow: hidden; }
+    .barra span { display: block; height: 100%; width: 0; background: var(--verde); transition: width .4s; }
+    #conto { font-size: .9rem; color: var(--tenue); white-space: nowrap; }
+
+    h1 { font-size: clamp(2rem, 7vw, 2.7rem); line-height: 1.2; margin: 34px 0 10px; font-weight: 800; }
+    .serve { background: var(--carta); border: 2px solid var(--riga); border-radius: 16px; padding: 14px 20px; margin: 18px 0; }
+    .serve ul { margin: 6px 0 0; padding: 0; list-style: none; }
+    .serve li { padding: 3px 0; }
+    .tranquillo { background: var(--verde-chiaro); border-radius: 16px; padding: 14px 20px; margin: 18px 0; }
+    .tranquillo b { color: var(--verde); }
+
+    .sezione { margin: 46px 0 14px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.3rem; }
+    .sezione::after { content: ""; flex: 1; height: 2px; background: var(--riga); }
+
+    /* Un passo */
+    .p { background: var(--carta); border: 2px solid var(--riga); border-radius: 20px; padding: 22px 22px 18px; margin: 16px 0;
+         transition: opacity .3s, border-color .3s; scroll-margin-top: 80px; }
+    .p.ora { border-color: var(--giallo-scuro); box-shadow: 0 0 0 4px #ffd84d55; }
+    .p.fatto { opacity: .55; }
+    .p.fatto .corpo { display: none; }
+    .cima { display: flex; align-items: center; gap: 14px; }
+    .n { flex: none; width: 52px; height: 52px; border-radius: 50%; background: var(--giallo); display: grid; place-items: center;
+         font-size: 1.45rem; font-weight: 800; }
+    .p.fatto .n { background: var(--verde); color: #fff; font-size: 0; }
+    .p.fatto .n::after { content: "✓"; font-size: 1.6rem; }
+    .p h2 { margin: 0; font-size: 1.35rem; line-height: 1.3; font-weight: 800; }
+    .corpo { margin-top: 14px; }
+    .perche { color: var(--tenue); font-size: .95rem; margin: 0 0 12px; }
+
+    .apri { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; margin: 6px 0 16px;
+            border-radius: 14px; background: #1f5fbf; color: #fff !important; text-decoration: none; font-weight: 800; font-size: 1.1rem; }
+    .apri:hover { background: #174a96; }
+
+    ol.az { list-style: none; counter-reset: a; margin: 0; padding: 0; }
+    ol.az li { counter-increment: a; position: relative; padding: 10px 0 10px 48px; border-top: 1px dashed var(--riga); }
+    ol.az li:first-child { border-top: 0; }
+    ol.az li::before { content: counter(a); position: absolute; left: 0; top: 11px; width: 32px; height: 32px; border-radius: 50%;
+                       border: 2px solid var(--testo); display: grid; place-items: center; font-size: .9rem; font-weight: 800; }
+    .t { display: inline-block; padding: 0 10px; border-radius: 8px; background: var(--giallo); font-weight: 800; white-space: nowrap; }
+    .scrivi { display: inline-block; padding: 0 10px; border-radius: 8px; border: 2px dashed var(--testo); font-family: ui-monospace, Consolas, monospace;
+              font-size: .95em; font-weight: 600; }
+    .attenzione { margin: 12px 0 4px; padding: 12px 16px; border-radius: 12px; background: #fdecea; color: var(--rosso); font-weight: 600; }
+    .bene { margin: 12px 0 4px; padding: 12px 16px; border-radius: 12px; background: var(--verde-chiaro); }
+
+    .ok { margin-top: 16px; width: 100%; padding: 14px; border-radius: 14px; border: 2px solid var(--verde); background: #fff; color: var(--verde);
+          font: inherit; font-weight: 800; cursor: pointer; }
+    .ok:hover { background: var(--verde-chiaro); }
+    .p.fatto .ok { display: none; }
+    .riapri { display: none; margin-left: auto; background: none; border: 0; font: inherit; font-size: .9rem; color: var(--tenue); text-decoration: underline; cursor: pointer; }
+    .p.fatto .riapri { display: inline; }
+
+    .aiuto li { padding: 8px 0; }
+    .aiuto b { display: block; }
+    .fine { text-align: center; margin-top: 30px; color: var(--tenue); }
+    @media (max-width: 520px) { body { font-size: 18px; } .p { padding: 18px 16px 14px; } }
   </style>
 </head>
 <body>
+  <div class="testa"><div class="dentro">
+    <strong>Guida Sentinel</strong>
+    <div class="barra" aria-hidden="true"><span id="barra"></span></div>
+    <span id="conto">0 di 9</span>
+  </div></div>
+
   <main class="g">
     <h1>Come si usa Sentinel</h1>
-    <p class="intro">Ti servono: un computer, il tuo indirizzo Gmail con la password, una carta di pagamento e un foglio dove scrivere due cose. Ci vogliono 10 minuti, una volta sola.</p>
 
-    <div class="att"><strong>Non spendi niente.</strong> Google ti regala 300 $ (circa 270 €) da usare in 90 giorni. La carta serve solo a Google per sapere che sei una persona vera. Finiti i 90 giorni non ti addebita niente da solo.</div>
-
-    <p class="parte">A casa · una volta sola</p>
-
-    <div class="p"><div class="n">1</div><div>
-      <h2>Ricevi il regalo di Google</h2>
-      <p><a class="vai" href="https://cloud.google.com/free" target="_blank" rel="noopener">Apri questa pagina</a></p>
+    <div class="serve">
+      <strong>Ti servono:</strong>
       <ul>
-        <li>Premi il pulsante <span class="b">Inizia gratuitamente</span>.</li>
-        <li>Entra con la tua Gmail e la tua password.</li>
-        <li>Rispondi alle domande e scrivi i dati della carta.</li>
-        <li>Alla fine vedi una pagina che parla di <strong>300 $</strong> di credito. Fatto.</li>
+        <li>📧 la tua Gmail e la sua password</li>
+        <li>💳 una carta di pagamento</li>
+        <li>📝 un foglio e una penna</li>
+        <li>⏱️ 10 minuti, una volta sola</li>
       </ul>
-    </div></div>
+    </div>
 
-    <div class="p"><div class="n">2</div><div>
-      <h2>Scrivi sul foglio il nome del tuo progetto</h2>
-      <p><a class="vai" href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener">Apri questa pagina</a></p>
-      <ul>
-        <li>Cerca il riquadro <span class="b">Informazioni sul progetto</span>.</li>
-        <li>Dentro c'è la scritta <span class="b">ID progetto</span>. Accanto c'è una parola con dei numeri, per esempio <code>my-first-project-123456</code>.</li>
-        <li><strong>Scrivila sul foglio</strong> uguale, lettera per lettera.</li>
+    <div class="tranquillo"><b>Non spendi niente.</b> Google ti regala 300 $ (circa 270 €) per 90 giorni. La carta serve solo a dimostrare che sei una persona vera. Dopo i 90 giorni Google non ti fa pagare niente da solo.</div>
+
+    <div class="sezione">🏠 A casa · una volta sola</div>
+
+    <section class="p" data-p="1">
+      <div class="cima"><div class="n">1</div><h2>Prendi il regalo di Google</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <a class="apri" href="https://cloud.google.com/free" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <ol class="az">
+          <li>Premi <span class="t">Inizia gratuitamente</span></li>
+          <li>Entra con la tua <b>Gmail</b> e la tua <b>password</b></li>
+          <li>Rispondi alle domande e scrivi i dati della <b>carta</b></li>
+        </ol>
+        <div class="bene">✅ Hai finito quando vedi scritto <b>300 $</b> di credito.</div>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="2">
+      <div class="cima"><div class="n">2</div><h2>Copia il nome del progetto</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <a class="apri" href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <ol class="az">
+          <li>Cerca il riquadro <span class="t">Informazioni sul progetto</span></li>
+          <li>Guarda la riga <b>ID progetto</b>. C'è una parola con numeri, per esempio <span class="scrivi">my-first-project-123456</span></li>
+          <li><b>Scrivila sul foglio</b>, lettera per lettera</li>
+        </ol>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="3">
+      <div class="cima"><div class="n">3</div><h2>Accendi Nano Banana Pro</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <a class="apri" href="https://console.cloud.google.com/apis/library/aiplatform.googleapis.com" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <ol class="az">
+          <li>Premi il pulsante blu <span class="t">Abilita</span></li>
+          <li>Aspetta qualche secondo</li>
+        </ol>
+        <div class="bene">✅ Hai finito quando il pulsante diventa <b>Gestisci</b>.</div>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="4">
+      <div class="cima"><div class="n">4</div><h2>Crea il tuo aiutante</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <p class="perche">L'aiutante è un piccolo utente che sa solo fare immagini. Serve per la chiave del passo 5.</p>
+        <a class="apri" href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <ol class="az">
+          <li>Nella prima casella scrivi <span class="scrivi">sentinel</span></li>
+          <li>Premi <span class="t">Crea e continua</span></li>
+          <li>Clicca su <span class="t">Seleziona un ruolo</span> e scrivi <span class="scrivi">Vertex AI User</span></li>
+          <li>Clicca sulla riga che compare: <b>Vertex AI User</b> (o <b>Utente Vertex AI</b>)</li>
+          <li>Premi <span class="t">Continua</span> e poi <span class="t">Fine</span></li>
+        </ol>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="5">
+      <div class="cima"><div class="n">5</div><h2>Crea la tua chiave</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <a class="apri" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <ol class="az">
+          <li>In alto premi <span class="t">+ Crea credenziali</span> e poi <span class="t">Chiave API</span></li>
+          <li>Metti la spunta su <b>Autentica le chiamate API tramite un account di servizio</b> e scegli <span class="scrivi">sentinel</span></li>
+          <li>Scegli <span class="t">Limita chiave</span> e nell'elenco spunta <b>Vertex AI API</b></li>
+          <li>Premi <span class="t">Crea</span></li>
+          <li>Esce una lunga riga di lettere e numeri: è la tua <b>chiave</b>. Copiala e <b>mandala per mail a te stesso</b></li>
+        </ol>
+        <div class="attenzione">🔒 La chiave è la password del tuo credito. Non darla a nessuno.</div>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <div class="sezione">🏫 In aula · ogni volta</div>
+
+    <section class="p" data-p="6">
+      <div class="cima"><div class="n">6</div><h2>Apri Sentinel in incognito</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <ol class="az">
+          <li>Apri il browser e premi insieme <span class="t">Ctrl</span> + <span class="t">Maiusc</span> + <span class="t">N</span></li>
+          <li>Si apre una finestra scura. Lì scrivi <span class="scrivi">giovannisavelli.github.io/sentinel-aula</span> e premi <b>Invio</b></li>
+        </ol>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="7">
+      <div class="cima"><div class="n">7</div><h2>Metti le tue due cose</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <ol class="az">
+          <li>In <b>ID del progetto</b> scrivi la parola del <b>foglio</b> (passo 2)</li>
+          <li>In <b>Chiave API</b> incolla la chiave della <b>mail</b> (passo 5)</li>
+          <li>Premi <span class="t">Inserisci</span></li>
+        </ol>
+        <div class="bene">✅ Funziona quando in alto c'è scritto <b>Inserita</b>.</div>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="8">
+      <div class="cima"><div class="n">8</div><h2>Crea le immagini</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <ol class="az">
+          <li>Scrivi cosa vuoi vedere</li>
+          <li>Premi <span class="t">Genera</span> e aspetta, di solito meno di un minuto</li>
+          <li>Se ti piace, premi <span class="t">Salva immagine</span></li>
+        </ol>
+        <p class="perche">Ogni immagine costa circa 0,12 € dal regalo di Google, anche se non ti piace.</p>
+        <button class="ok" type="button">Fatto, vado avanti</button>
+      </div>
+    </section>
+
+    <section class="p" data-p="9">
+      <div class="cima"><div class="n">9</div><h2>Quando hai finito</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="corpo">
+        <ol class="az">
+          <li>Premi <span class="t">Esci</span> in alto a destra</li>
+          <li>Chiudi la finestra scura</li>
+        </ol>
+        <div class="bene">✅ Chi viene dopo di te non trova niente di tuo.</div>
+        <button class="ok" type="button">Fatto</button>
+      </div>
+    </section>
+
+    <div class="sezione">🆘 Se qualcosa non va</div>
+    <section class="p" style="border-style:dashed">
+      <ul class="aiuto" style="list-style:none;margin:0;padding:0">
+        <li><b>«Permesso negato» appena creata la chiave</b>È normale. Aspetta un minuto e premi di nuovo.</li>
+        <li><b>«Permesso negato» anche dopo</b>Controlla l'ID del progetto, lettera per lettera.</li>
+        <li><b>«Chiave non valida»</b>Ricopiala tutta dalla mail, senza spazi.</li>
+        <li><b>«API non attiva»</b>Rifai il passo 3.</li>
+        <li><b>Non esce l'immagine</b>Scrivi il testo in un altro modo.</li>
       </ul>
-    </div></div>
-
-    <div class="p"><div class="n">3</div><div>
-      <h2>Accendi Nano Banana Pro</h2>
-      <p><a class="vai" href="https://console.cloud.google.com/apis/library/aiplatform.googleapis.com" target="_blank" rel="noopener">Apri questa pagina</a></p>
-      <ul>
-        <li>Premi il pulsante blu <span class="b">Abilita</span>.</li>
-        <li>Aspetta qualche secondo. Quando il pulsante diventa <span class="b">Gestisci</span>, hai finito.</li>
-      </ul>
-      <p class="nota">Se il pulsante dice già <span class="b">Gestisci</span>, è già acceso: vai avanti.</p>
-    </div></div>
-
-    <div class="p"><div class="n">4</div><div>
-      <h2>Crea il tuo «aiutante»</h2>
-      <p class="nota">È un piccolo utente che può solo creare immagini. Serve alla chiave del passo 5.</p>
-      <p><a class="vai" href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Apri questa pagina</a></p>
-      <ul>
-        <li>Nella prima casella scrivi <code>sentinel</code>.</li>
-        <li>Premi <span class="b">Crea e continua</span>.</li>
-        <li>Clicca sulla casella <span class="b">Seleziona un ruolo</span> e scrivi <code>Vertex AI User</code>. Clicca sulla riga che compare (può chiamarsi <em>Vertex AI User</em> o <em>Utente Vertex AI</em>).</li>
-        <li>Premi <span class="b">Continua</span> e poi <span class="b">Fine</span>.</li>
-      </ul>
-    </div></div>
-
-    <div class="p"><div class="n">5</div><div>
-      <h2>Crea la tua chiave</h2>
-      <p><a class="vai" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Apri questa pagina</a></p>
-      <ul>
-        <li>In alto premi <span class="b">+ Crea credenziali</span> e poi <span class="b">Chiave API</span>.</li>
-        <li>Metti la spunta su <span class="b">Autentica le chiamate API tramite un account di servizio</span> e scegli <code>sentinel</code>.</li>
-        <li>Dove parla di limitazioni scegli <span class="b">Limita chiave</span> e nell'elenco spunta <span class="b">Vertex AI API</span>.</li>
-        <li>Premi <span class="b">Crea</span>. Compare una lunga riga di lettere e numeri: è la tua chiave.</li>
-        <li>Premi l'icona per copiarla e <strong>incollala in una mail a te stesso</strong>, così in aula la ritrovi.</li>
-      </ul>
-      <div class="att">La chiave è come la password del tuo credito: non darla a nessuno.</div>
-    </div></div>
-
-    <p class="parte">In aula · ogni volta</p>
-
-    <div class="p"><div class="n">6</div><div>
-      <h2>Apri Sentinel in incognito</h2>
-      <ul>
-        <li>Apri il browser e premi insieme i tasti <span class="b">Ctrl</span> <span class="b">Maiusc</span> <span class="b">N</span>. Si apre una finestra scura: è la finestra in incognito.</li>
-        <li>Lì dentro scrivi l'indirizzo <code>giovannisavelli.github.io/sentinel-aula</code> e premi Invio.</li>
-      </ul>
-    </div></div>
-
-    <div class="p"><div class="n">7</div><div>
-      <h2>Metti le tue due cose</h2>
-      <ul>
-        <li>Nella casella <span class="b">ID del progetto</span> scrivi la parola del foglio (passo 2).</li>
-        <li>Nella casella <span class="b">Chiave API</span> incolla la chiave dalla tua mail (passo 5).</li>
-        <li>Premi <span class="b">Inserisci</span>. Se è tutto giusto, in alto compare <span class="b">Inserita</span>.</li>
-      </ul>
-    </div></div>
-
-    <div class="p"><div class="n">8</div><div>
-      <h2>Crea le immagini</h2>
-      <ul>
-        <li>Scrivi cosa vuoi vedere e premi <span class="b">Genera</span>. Aspetta: di solito ci vuole meno di un minuto.</li>
-        <li>Ogni immagine costa circa 0,12 € dal regalo di Google, anche se non ti piace.</li>
-        <li>Per tenerla premi <span class="b">Salva immagine</span>.</li>
-      </ul>
-    </div></div>
-
-    <div class="p"><div class="n">9</div><div>
-      <h2>Quando hai finito</h2>
-      <ul>
-        <li>Premi <span class="b">Esci</span> in alto a destra.</li>
-        <li>Chiudi la finestra in incognito. Fine: chi viene dopo non trova niente di tuo.</li>
-      </ul>
-    </div></div>
-
-    <p class="parte">Se qualcosa non va</p>
-
-    <div class="p"><div class="n">?</div><div>
-      <ul>
-        <li><strong>«Permesso negato» appena creata la chiave</strong>: è normale. Aspetta un minuto e premi di nuovo.</li>
-        <li><strong>«Permesso negato» anche dopo</strong>: controlla di aver scritto l'ID del progetto giusto, lettera per lettera.</li>
-        <li><strong>«Chiave non valida»</strong>: ricopiala tutta dalla mail, senza spazi in più.</li>
-        <li><strong>«API non attiva»</strong>: rifai il passo 3.</li>
-        <li><strong>Non esce l'immagine</strong>: Google ha bloccato il testo. Scrivilo in un altro modo.</li>
-      </ul>
-      <p class="nota">Se sei bloccato, chiama il professore e fagli vedere la scritta rossa.</p>
-    </div></div>
+      <div class="bene">🙋 Sei bloccato? Chiama il professore e fagli vedere la scritta.</div>
+    </section>
   </main>
+
+  <script>
+    // Avanzamento: «Fatto» chiude il passo e porta l'occhio al successivo. Si ricorda solo su questo browser.
+    (() => {
+      const passi = [...document.querySelectorAll(".p[data-p]")];
+      let fatti = new Set();
+      try { fatti = new Set(JSON.parse(localStorage.getItem("guida-sentinel") || "[]")); } catch {}
+      function aggiorna(scorri) {
+        let ora = null;
+        for (const p of passi) {
+          const f = fatti.has(p.dataset.p);
+          p.classList.toggle("fatto", f);
+          p.classList.remove("ora");
+          if (!f && !ora) ora = p;
+        }
+        if (ora) { ora.classList.add("ora"); if (scorri) ora.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        document.getElementById("barra").style.width = (fatti.size / passi.length * 100) + "%";
+        document.getElementById("conto").textContent = fatti.size + " di " + passi.length;
+        try { localStorage.setItem("guida-sentinel", JSON.stringify([...fatti])); } catch {}
+      }
+      for (const p of passi) {
+        p.querySelector(".ok").onclick = () => { fatti.add(p.dataset.p); aggiorna(true); };
+        p.querySelector(".riapri").onclick = () => { fatti.delete(p.dataset.p); aggiorna(false); };
+      }
+      aggiorna(false);
+    })();
+  </script>
 </body>
 </html>
