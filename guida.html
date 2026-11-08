@@ -7,103 +7,142 @@
   <title>Guida Sentinel Aula</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .guida { width: min(100% - 32px, 760px); margin: 40px auto 80px; }
-    .guida h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 .4rem; }
-    .guida h2 { margin: 2.2rem 0 .6rem; font-size: 1.25rem; }
-    .guida .passo { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin: 12px 0; }
-    .guida .passo h3 { margin: 0 0 .5rem; font-size: 1.05rem; }
-    .guida .passo h3 b { color: var(--accent); margin-right: 6px; }
-    .guida ol { margin: .3rem 0; padding-left: 1.3rem; }
-    .guida li { margin: .25rem 0; }
-    .guida a { color: var(--accent); }
-    .guida em { font-style: normal; font-weight: 650; color: #fff; }
-    .guida .box { border-left: 3px solid var(--accent); padding: 4px 14px; color: #cfcfd5; }
+    body { font-size: 18px; }
+    .g { width: min(100% - 32px, 720px); margin: 32px auto 90px; }
+    .g h1 { font-size: clamp(2rem, 6vw, 2.8rem); margin: 0 0 .3rem; }
+    .g .intro { font-size: 1.15rem; color: #d6d6dc; margin: 0 0 1.6rem; }
+    .g .parte { margin: 2.4rem 0 .8rem; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+    .p { display: grid; grid-template-columns: 54px 1fr; gap: 16px; background: var(--surface); border: 1px solid var(--line);
+         border-radius: 14px; padding: 18px; margin: 12px 0; }
+    .n { width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: #17150d; display: grid; place-items: center;
+         font-size: 1.5rem; font-weight: 800; }
+    .p h2 { margin: .2rem 0 .5rem; font-size: 1.2rem; }
+    .p p { margin: .45rem 0; }
+    .p ul { margin: .4rem 0; padding-left: 1.2rem; }
+    .p li { margin: .35rem 0; }
+    .b { display: inline-block; padding: 1px 9px; border-radius: 6px; background: #2a2a31; border: 1px solid #44444d; font-weight: 650; color: #fff; white-space: nowrap; }
+    .vai { display: inline-block; margin: .3rem 0; padding: 10px 18px; border-radius: 10px; background: var(--accent); color: #17150d !important;
+           font-weight: 750; text-decoration: none; }
+    .vai:hover { background: #ffda69; }
+    .nota { color: var(--muted); font-size: .95rem; }
+    .att { border-left: 4px solid var(--accent); padding: 6px 14px; margin: .6rem 0; color: #e6e6ea; }
+    code { font-family: var(--mono); background: #202026; padding: 1px 6px; border-radius: 5px; }
+    @media (max-width: 520px) { .p { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  <main class="guida">
-    <h1>Guida Sentinel Aula</h1>
-    <p class="lead">Sentinel Aula crea immagini con Nano Banana Pro usando il <strong>tuo</strong> account Google Cloud e i 300 $ di credito gratuito che Google regala a chi si iscrive. Si prepara una volta sola, a casa, in circa 10 minuti. In aula basta incollare la chiave.</p>
+  <main class="g">
+    <h1>Come si usa Sentinel</h1>
+    <p class="intro">Ti servono: un computer, il tuo indirizzo Gmail con la password, una carta di pagamento e un foglio dove scrivere due cose. Ci vogliono 10 minuti, una volta sola.</p>
 
-    <h2>A casa, una volta sola</h2>
+    <div class="att"><strong>Non spendi niente.</strong> Google ti regala 300 $ (circa 270 €) da usare in 90 giorni. La carta serve solo a Google per sapere che sei una persona vera. Finiti i 90 giorni non ti addebita niente da solo.</div>
 
-    <div class="passo">
-      <h3><b>1</b> Attiva la prova gratuita di Google Cloud</h3>
-      <ol>
-        <li>Apri <a href="https://cloud.google.com/free" target="_blank" rel="noopener">cloud.google.com/free</a> e premi <em>Inizia gratuitamente</em>. Accedi con la tua Gmail.</li>
-        <li>Compila i dati e inserisci una carta. Serve solo a Google per verificare che sei una persona: durante la prova <strong>non addebita niente</strong>, e quando finisce non passa da sola a pagamento.</li>
-        <li>Alla fine ricevi 300 $ di credito, validi 90 giorni. Google crea da solo un primo progetto («My First Project»).</li>
-      </ol>
-    </div>
+    <p class="parte">A casa · una volta sola</p>
 
-    <div class="passo">
-      <h3><b>2</b> Copia l'ID del progetto</h3>
-      <ol>
-        <li>Apri la <a href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener">pagina iniziale della console</a>.</li>
-        <li>Nel riquadro <em>Informazioni sul progetto</em> c'è l'<em>ID progetto</em>: è tutto minuscolo, con trattini e numeri (per esempio <code>my-first-project-123456</code>). Copialo in un appunto: ti serve in aula.</li>
-      </ol>
-    </div>
+    <div class="p"><div class="n">1</div><div>
+      <h2>Ricevi il regalo di Google</h2>
+      <p><a class="vai" href="https://cloud.google.com/free" target="_blank" rel="noopener">Apri questa pagina</a></p>
+      <ul>
+        <li>Premi il pulsante <span class="b">Inizia gratuitamente</span>.</li>
+        <li>Entra con la tua Gmail e la tua password.</li>
+        <li>Rispondi alle domande e scrivi i dati della carta.</li>
+        <li>Alla fine vedi una pagina che parla di <strong>300 $</strong> di credito. Fatto.</li>
+      </ul>
+    </div></div>
 
-    <div class="passo">
-      <h3><b>3</b> Accendi Nano Banana Pro nel progetto</h3>
-      <ol>
-        <li>Apri <a href="https://console.cloud.google.com/apis/library/aiplatform.googleapis.com" target="_blank" rel="noopener">la pagina dell'API Vertex AI</a> e controlla che in alto sia selezionato il tuo progetto.</li>
-        <li>Premi <em>Abilita</em> e aspetta che finisca.</li>
-      </ol>
-    </div>
+    <div class="p"><div class="n">2</div><div>
+      <h2>Scrivi sul foglio il nome del tuo progetto</h2>
+      <p><a class="vai" href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener">Apri questa pagina</a></p>
+      <ul>
+        <li>Cerca il riquadro <span class="b">Informazioni sul progetto</span>.</li>
+        <li>Dentro c'è la scritta <span class="b">ID progetto</span>. Accanto c'è una parola con dei numeri, per esempio <code>my-first-project-123456</code>.</li>
+        <li><strong>Scrivila sul foglio</strong> uguale, lettera per lettera.</li>
+      </ul>
+    </div></div>
 
-    <div class="passo">
-      <h3><b>4</b> Crea l'«account di servizio»</h3>
-      <p class="help">È un utente finto che Google usa per la tua chiave. Ha un solo permesso: creare immagini.</p>
-      <ol>
-        <li>Apri <a href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Crea account di servizio</a>.</li>
-        <li>Come nome scrivi <code>sentinel</code> e premi <em>Crea e continua</em>.</li>
-        <li>In <em>Seleziona un ruolo</em> cerca <code>Utente Vertex AI</code> e sceglilo. Premi <em>Continua</em>, poi <em>Fine</em>.</li>
-      </ol>
-    </div>
+    <div class="p"><div class="n">3</div><div>
+      <h2>Accendi Nano Banana Pro</h2>
+      <p><a class="vai" href="https://console.cloud.google.com/apis/library/aiplatform.googleapis.com" target="_blank" rel="noopener">Apri questa pagina</a></p>
+      <ul>
+        <li>Premi il pulsante blu <span class="b">Abilita</span>.</li>
+        <li>Aspetta qualche secondo. Quando il pulsante diventa <span class="b">Gestisci</span>, hai finito.</li>
+      </ul>
+      <p class="nota">Se il pulsante dice già <span class="b">Gestisci</span>, è già acceso: vai avanti.</p>
+    </div></div>
 
-    <div class="passo">
-      <h3><b>5</b> Crea la chiave</h3>
-      <ol>
-        <li>Apri <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Credenziali</a> e premi <em>+ Crea credenziali</em> → <em>Chiave API</em>.</li>
-        <li>Spunta <em>Autentica le chiamate API tramite un account di servizio</em> e scegli l'account <code>sentinel</code> creato prima.</li>
-        <li>Nelle limitazioni scegli <em>Limita chiave</em> e seleziona <em>Vertex AI API</em>: senza questa limitazione Google non crea la chiave.</li>
-        <li>Premi <em>Crea</em> e copia la chiave in un appunto, insieme all'ID del progetto.</li>
-      </ol>
-      <p class="box">La chiave è come una password: chi ce l'ha spende il tuo credito. Non mandarla a nessuno e non scriverla su fogli lasciati in aula.</p>
-    </div>
+    <div class="p"><div class="n">4</div><div>
+      <h2>Crea il tuo «aiutante»</h2>
+      <p class="nota">È un piccolo utente che può solo creare immagini. Serve alla chiave del passo 5.</p>
+      <p><a class="vai" href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Apri questa pagina</a></p>
+      <ul>
+        <li>Nella prima casella scrivi <code>sentinel</code>.</li>
+        <li>Premi <span class="b">Crea e continua</span>.</li>
+        <li>Clicca sulla casella <span class="b">Seleziona un ruolo</span> e scrivi <code>Vertex AI User</code>. Clicca sulla riga che compare (può chiamarsi <em>Vertex AI User</em> o <em>Utente Vertex AI</em>).</li>
+        <li>Premi <span class="b">Continua</span> e poi <span class="b">Fine</span>.</li>
+      </ul>
+    </div></div>
 
-    <h2>In aula, ogni volta</h2>
+    <div class="p"><div class="n">5</div><div>
+      <h2>Crea la tua chiave</h2>
+      <p><a class="vai" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Apri questa pagina</a></p>
+      <ul>
+        <li>In alto premi <span class="b">+ Crea credenziali</span> e poi <span class="b">Chiave API</span>.</li>
+        <li>Metti la spunta su <span class="b">Autentica le chiamate API tramite un account di servizio</span> e scegli <code>sentinel</code>.</li>
+        <li>Dove parla di limitazioni scegli <span class="b">Limita chiave</span> e nell'elenco spunta <span class="b">Vertex AI API</span>.</li>
+        <li>Premi <span class="b">Crea</span>. Compare una lunga riga di lettere e numeri: è la tua chiave.</li>
+        <li>Premi l'icona per copiarla e <strong>incollala in una mail a te stesso</strong>, così in aula la ritrovi.</li>
+      </ul>
+      <div class="att">La chiave è come la password del tuo credito: non darla a nessuno.</div>
+    </div></div>
 
-    <div class="passo">
-      <h3><b>6</b> Usa Sentinel</h3>
-      <ol>
-        <li>Apri una <em>finestra in incognito</em> (Chrome: Ctrl+Maiusc+N; Edge: Ctrl+Maiusc+N) e vai sull'indirizzo di Sentinel Aula.</li>
-        <li>Incolla l'<em>ID del progetto</em> e la <em>chiave</em>, poi premi <em>Inserisci</em>.</li>
-        <li>Scrivi il prompt, scegli formato e risoluzione, aggiungi se vuoi delle immagini di riferimento e premi <em>Genera</em>. Ogni immagine costa circa 0,12 € dal tuo credito (0,21 € in 4K), anche quelle che non ti piacciono.</li>
-        <li>Premi <em>Salva immagine</em> su quelle che vuoi tenere.</li>
-      </ol>
-    </div>
+    <p class="parte">In aula · ogni volta</p>
 
-    <div class="passo">
-      <h3><b>7</b> A fine lezione</h3>
-      <ol>
-        <li>Premi <em>Esci</em>: la pagina dimentica chiave, progetto e immagini.</li>
-        <li>Chiudi la finestra in incognito. Chi viene dopo di te non trova niente.</li>
-      </ol>
-    </div>
+    <div class="p"><div class="n">6</div><div>
+      <h2>Apri Sentinel in incognito</h2>
+      <ul>
+        <li>Apri il browser e premi insieme i tasti <span class="b">Ctrl</span> <span class="b">Maiusc</span> <span class="b">N</span>. Si apre una finestra scura: è la finestra in incognito.</li>
+        <li>Lì dentro scrivi l'indirizzo <code>giovannisavelli.github.io/sentinel-aula</code> e premi Invio.</li>
+      </ul>
+    </div></div>
 
-    <h2>Se qualcosa non va</h2>
-    <div class="passo">
-      <ol>
-        <li><em>«Permesso negato» subito dopo aver creato la chiave</em>: è normale, Google ci mette circa un minuto ad attivarla. Aspetta e riprova.</li>
-        <li><em>«Permesso negato» anche dopo</em>: controlla l'ID del progetto e che l'account <code>sentinel</code> abbia il ruolo <code>Utente Vertex AI</code> (passo 4).</li>
-        <li><em>«API non attiva»</em>: rifai il passo 3.</li>
-        <li><em>«Chiave non valida»</em>: ricopiala intera dalla pagina Credenziali.</li>
-        <li><em>Nessuna immagine</em>: il prompt è stato bloccato dai filtri di Google. Riformulalo.</li>
-      </ol>
-      <p class="help">Quanto credito resta: <a href="https://console.cloud.google.com/billing" target="_blank" rel="noopener">Fatturazione</a> nella console (i numeri arrivano con qualche ora di ritardo). A fine corso puoi cancellare la chiave da Credenziali.</p>
-    </div>
+    <div class="p"><div class="n">7</div><div>
+      <h2>Metti le tue due cose</h2>
+      <ul>
+        <li>Nella casella <span class="b">ID del progetto</span> scrivi la parola del foglio (passo 2).</li>
+        <li>Nella casella <span class="b">Chiave API</span> incolla la chiave dalla tua mail (passo 5).</li>
+        <li>Premi <span class="b">Inserisci</span>. Se è tutto giusto, in alto compare <span class="b">Inserita</span>.</li>
+      </ul>
+    </div></div>
+
+    <div class="p"><div class="n">8</div><div>
+      <h2>Crea le immagini</h2>
+      <ul>
+        <li>Scrivi cosa vuoi vedere e premi <span class="b">Genera</span>. Aspetta: di solito ci vuole meno di un minuto.</li>
+        <li>Ogni immagine costa circa 0,12 € dal regalo di Google, anche se non ti piace.</li>
+        <li>Per tenerla premi <span class="b">Salva immagine</span>.</li>
+      </ul>
+    </div></div>
+
+    <div class="p"><div class="n">9</div><div>
+      <h2>Quando hai finito</h2>
+      <ul>
+        <li>Premi <span class="b">Esci</span> in alto a destra.</li>
+        <li>Chiudi la finestra in incognito. Fine: chi viene dopo non trova niente di tuo.</li>
+      </ul>
+    </div></div>
+
+    <p class="parte">Se qualcosa non va</p>
+
+    <div class="p"><div class="n">?</div><div>
+      <ul>
+        <li><strong>«Permesso negato» appena creata la chiave</strong>: è normale. Aspetta un minuto e premi di nuovo.</li>
+        <li><strong>«Permesso negato» anche dopo</strong>: controlla di aver scritto l'ID del progetto giusto, lettera per lettera.</li>
+        <li><strong>«Chiave non valida»</strong>: ricopiala tutta dalla mail, senza spazi in più.</li>
+        <li><strong>«API non attiva»</strong>: rifai il passo 3.</li>
+        <li><strong>Non esce l'immagine</strong>: Google ha bloccato il testo. Scrivilo in un altro modo.</li>
+      </ul>
+      <p class="nota">Se sei bloccato, chiama il professore e fagli vedere la scritta rossa.</p>
+    </div></div>
   </main>
 </body>
 </html>
