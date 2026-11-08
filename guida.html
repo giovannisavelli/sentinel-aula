@@ -118,7 +118,7 @@
           <li>Se Google chiede la <b>verifica in due passaggi</b>, falla: tieni a portata di mano il <b>telefono</b> e segui le istruzioni. È normale, serve per la sicurezza</li>
         </ol>
         <div class="attenzione">💳 Usa una carta di credito o di debito, <b>non PayPal</b>. Con PayPal Google può chiedere un pagamento anticipato.</div>
-        <div class="bene">✅ Hai finito quando si apre la pagina di <b>Google Cloud</b>, con il nome del tuo progetto in alto. Il credito non serve cercarlo: c'è, anche se non lo vedi scritto.</div>
+        <div class="bene">✅ Hai finito quando vedi la pagina <b>«Ti diamo il benvenuto»</b> con la scritta <b>«Stai usando la prova senza costi»</b>.</div>
         <button class="ok" type="button">Fatto, vado avanti</button>
       </div>
     </section>
@@ -126,12 +126,13 @@
     <section class="p" data-p="2">
       <div class="cima"><div class="n">2</div><h2>Copia il nome del progetto</h2><button class="riapri" type="button">Riapri</button></div>
       <div class="corpo">
-        <a class="apri" href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <a class="apri" href="https://console.cloud.google.com/welcome" target="_blank" rel="noopener">Apri la pagina ↗</a>
         <ol class="az">
-          <li>Cerca il riquadro <span class="t">Informazioni sul progetto</span></li>
-          <li>Guarda la riga <b>ID progetto</b>. C'è una parola con numeri, per esempio <span class="scrivi">my-first-project-123456</span></li>
+          <li>Si apre la pagina <b>«Ti diamo il benvenuto»</b></li>
+          <li>Cerca la scritta <b>«Stai lavorando al progetto»</b>. Sotto c'è <b>ID:</b> e una parola con numeri, per esempio <span class="scrivi">my-first-project-123456</span></li>
           <li><b>Scrivila sul foglio</b>, lettera per lettera</li>
         </ol>
+        <p class="perche">Nella stessa pagina vedi anche quanto credito ti resta.</p>
         <button class="ok" type="button">Fatto, vado avanti</button>
       </div>
     </section>
@@ -141,10 +142,10 @@
       <div class="corpo">
         <a class="apri" href="https://console.cloud.google.com/apis/library/aiplatform.googleapis.com" target="_blank" rel="noopener">Apri la pagina ↗</a>
         <ol class="az">
-          <li>Premi il pulsante blu <span class="t">Abilita</span></li>
-          <li>Aspetta qualche secondo</li>
+          <li>Si apre la pagina <b>Agent Platform API</b>: è il servizio di Nano Banana Pro</li>
+          <li>Premi il pulsante blu <span class="t">Abilita</span> e aspetta qualche secondo</li>
         </ol>
-        <div class="bene">✅ Hai finito quando il pulsante diventa <b>Gestisci</b>.</div>
+        <div class="bene">✅ Hai finito quando compare <b>«API abilitata»</b> e il pulsante diventa <b>Gestisci</b>.</div>
         <button class="ok" type="button">Fatto, vado avanti</button>
       </div>
     </section>
@@ -155,10 +156,10 @@
         <p class="perche">L'aiutante è un piccolo utente che sa solo fare immagini. Serve per la chiave del passo 5.</p>
         <a class="apri" href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Apri la pagina ↗</a>
         <ol class="az">
-          <li>Nella prima casella scrivi <span class="scrivi">sentinel</span></li>
+          <li>Si apre la pagina <b>«Crea service account»</b>. Nella casella <b>Nome service account</b> scrivi <span class="scrivi">sentinel</span></li>
           <li>Premi <span class="t">Crea e continua</span></li>
-          <li>Clicca su <span class="t">Seleziona un ruolo</span> e scrivi <span class="scrivi">Vertex AI User</span></li>
-          <li>Clicca sulla riga che compare: <b>Vertex AI User</b> (o <b>Utente Vertex AI</b>)</li>
+          <li>Nella parte <b>Autorizzazioni</b> clicca sulla casella del ruolo e scrivi <span class="scrivi">Agent Platform User</span></li>
+          <li>Clicca sulla riga <b>Agent Platform User</b> che compare</li>
           <li>Premi <span class="t">Continua</span> e poi <span class="t">Fine</span></li>
         </ol>
         <button class="ok" type="button">Fatto, vado avanti</button>
@@ -170,10 +171,10 @@
       <div class="corpo">
         <a class="apri" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Apri la pagina ↗</a>
         <ol class="az">
-          <li>In alto premi <span class="t">+ Crea credenziali</span> e poi <span class="t">Chiave API</span></li>
-          <li>Metti la spunta su <b>Autentica le chiamate API tramite un account di servizio</b> e scegli <span class="scrivi">sentinel</span></li>
-          <li>Scegli <span class="t">Limita chiave</span> e nell'elenco spunta <b>Vertex AI API</b></li>
-          <li>Premi <span class="t">Crea</span></li>
+          <li>In alto premi <span class="t">+ Crea credenziali</span> e poi <span class="t">Chiave API</span>. A destra si apre <b>«Crea chiave API»</b></li>
+          <li>Clicca sulla casella <b>Seleziona limitazioni dell'API</b>, spunta <b>Agent Platform API</b> (è la prima) e premi <span class="t">OK</span></li>
+          <li>Sotto compare <b>Service account</b>: premi <span class="t">+ Seleziona un service account</span> e scegli <span class="scrivi">sentinel</span></li>
+          <li>Il resto lascialo com'è. Premi <span class="t">Crea</span></li>
           <li>Esce una lunga riga di lettere e numeri: è la tua <b>chiave</b>. Copiala e <b>mandala per mail a te stesso</b></li>
         </ol>
         <div class="attenzione">🔒 La chiave è la password del tuo credito. Non darla a nessuno.</div>

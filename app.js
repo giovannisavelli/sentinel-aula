@@ -34,9 +34,9 @@
   function spiegaErrore(codice, testo) {
     const t = (testo || "").toLowerCase();
     if ((codice === 400 || codice === 401) && t.includes("api key")) return "Chiave non valida: ricopiala da Google Cloud (Credenziali).";
-    if (codice === 403 && (t.includes("has not been used") || t.includes("disabled"))) return "Nel tuo progetto l'API Vertex AI non è attiva: guida, passo 3.";
+    if (codice === 403 && (t.includes("has not been used") || t.includes("disabled"))) return "Nel tuo progetto l'Agent Platform API non è attiva: guida, passo 3.";
     if (codice === 403 && t.includes("billing")) return "Il progetto non ha la fatturazione o la prova gratuita attiva: guida, passo 1.";
-    if (codice === 403) return "Permesso negato. Se hai appena creato la chiave aspetta un minuto e riprova; se no controlla l'ID del progetto e il ruolo «Utente Vertex AI» (guida, passo 4).";
+    if (codice === 403) return "Permesso negato. Se hai appena creato la chiave aspetta un minuto e riprova; se no controlla l'ID del progetto e il ruolo «Agent Platform User» (guida, passo 4).";
     if (codice === 404) return "Progetto non trovato: controlla l'ID del progetto.";
     if (codice === 429) return "Troppe richieste in poco tempo: aspetta un minuto e riprova.";
     if (codice >= 500) return "Google è sovraccarico in questo momento: riprova tra poco.";
