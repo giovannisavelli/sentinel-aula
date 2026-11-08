@@ -192,3 +192,8 @@ select { font: inherit; } select:disabled { opacity: .57; cursor: not-allowed; }
 .refs button { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; border: 0; background: var(--error); color: #000; font-size: 12px; line-height: 20px; padding: 0; cursor: pointer; }
 .warn { color: var(--accent); }
 @media (max-width: 860px) { .row2 { grid-template-columns: 1fr; } }
+.esito { margin-top: 14px; padding: 14px 16px; border-radius: 10px; font-size: 1rem; font-weight: 650; line-height: 1.45; }
+.esito[data-tipo="attesa"] { background: #24242b; color: var(--ink); }
+.esito[data-tipo="ok"] { background: #12351f; color: #8ff0ac; border: 2px solid #2f8a4c; }
+.esito[data-tipo="errore"] { background: #3a1714; color: #ffb4a8; border: 2px solid #b3261e; }
+#pannello-chiave.attiva { border-color: #2f8a4c; }

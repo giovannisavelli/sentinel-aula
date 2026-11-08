@@ -58,16 +58,26 @@
     return JSON.parse(testo);
   }
 
+  // Esito ben visibile dentro il riquadro della chiave (non solo in fondo alla pagina).
+  function esitoChiave(testo, tipo) {
+    const e = $("esito-chiave");
+    e.hidden = !testo; e.textContent = testo || ""; e.dataset.tipo = tipo || "attesa";
+    $("pannello-chiave").classList.toggle("attiva", tipo === "ok");
+    if (testo) messaggio(testo, tipo === "errore" ? "error" : tipo === "ok" ? "ok" : "info");
+  }
+
   // «Inserisci»: controllo gratuito (conta i token di una parola) per sapere subito se chiave e progetto vanno.
   async function inserisci() {
-    const p = $("progetto").value.trim(), k = $("chiave").value.trim();
-    if (!/^[a-z][a-z0-9-]{4,28}[a-z0-9]$/.test(p)) return messaggio("L'ID del progetto è sbagliato: è tutto minuscolo, con trattini e numeri (guida, passo 2).", "error");
-    if (k.length < 30) return messaggio("La chiave sembra incompleta: ricopiala intera.", "error");
+    const p = $("progetto").value.trim().toLowerCase(), k = $("chiave").value.trim();
+    if (!/^[a-z][a-z0-9-]{4,28}[a-z0-9]$/.test(p)) return esitoChiave("❌ L'ID del progetto è sbagliato: è tutto minuscolo, con trattini e numeri (guida, passo 2).", "errore");
+    if (k.length < 30) return esitoChiave("❌ La chiave sembra incompleta: ricopiala intera.", "errore");
     progetto = p; chiave = k;
-    $("inserisci").disabled = true; messaggio("Controllo la chiave…");
+    $("inserisci").disabled = true; $("inserisci").textContent = "Controllo…";
+    esitoChiave("⏳ Sto controllando la chiave con Google…", "attesa");
     try {
       const url = indirizzo().replace(":generateContent", ":countTokens");
-      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": chiave },
+      const r = await fetch(url, { method: "POST", signal: AbortSignal.timeout(25000),
+        headers: { "Content-Type": "application/json", "x-goog-api-key": chiave },
         body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: "prova" }] }] }) });
       if (!r.ok) {
         let d = ""; try { d = (await r.json()).error.message; } catch {}
@@ -75,11 +85,13 @@
         if (!(r.status === 400 && !d.toLowerCase().includes("api key"))) throw new Error(spiegaErrore(r.status, d));
       }
       $("chiave").value = "";
-      messaggio("Chiave inserita. Puoi generare.", "ok");
+      esitoChiave("✅ Chiave accettata da Google. Progetto: " + progetto + ". Ora scrivi il prompt qui sotto e premi «Genera».", "ok");
+      aggiorna(); $("prompt").focus();
     } catch (e) {
       chiave = ""; progetto = "";
-      messaggio(e.message, "error");
+      esitoChiave("❌ " + (e.name === "TimeoutError" ? "Google non risponde. Controlla la connessione e riprova." : e.message), "errore");
     }
+    $("inserisci").textContent = "Inserisci";
     aggiorna();
   }
 
@@ -149,6 +161,7 @@
     $("modulo").reset(); $("progetto").value = ""; $("chiave").value = "";
     $("risultato").hidden = true; $("risultato").removeAttribute("src"); $("vuoto").hidden = false; $("salva").hidden = true;
     try { await navigator.clipboard.writeText(""); } catch {}
+    esitoChiave("", "attesa");
     aggiorna();
     messaggio("Hai finito. Chiudi la finestra in incognito: per il prossimo non resta niente.", "ok");
   }
