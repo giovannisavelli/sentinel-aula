@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel Aula</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="./" class="brand" aria-label="Sentinel Aula">
+      <svg width="30" height="30" viewBox="0 0 1024 1024" aria-hidden="true">
+        <circle cx="512" cy="512" r="252" fill="none" stroke="currentColor" stroke-width="66"/>
+        <circle cx="512" cy="512" r="72" fill="currentColor"/>
+        <circle cx="512" cy="260" r="65" fill="currentColor"/>
+      </svg>
+      <span>Sentinel <small>Aula</small></span>
+    </a>
+    <nav>
+      <a class="guide" href="guida.html" target="_blank" rel="noopener">Guida passo passo ↗</a>
+      <button id="esci" class="quiet" type="button" disabled>Esci</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="workspace">
+      <div class="controls">
+        <div class="intro">
+          <p class="eyebrow"><span></span> Nano Banana Pro con il tuo account Google Cloud</p>
+          <h1>Sentinel<span>.</span></h1>
+          <p class="lead">Inserisci la tua chiave, crea le immagini con il tuo credito e a fine lezione premi «Esci».</p>
+        </div>
+
+        <section class="panel" id="pannello-chiave">
+          <div class="section-head">
+            <h2>La tua chiave</h2>
+            <span id="stato" class="connection-state">Non inserita</span>
+          </div>
+          <label class="field-label" for="progetto">ID del progetto</label>
+          <input id="progetto" class="field" type="text" autocomplete="off" spellcheck="false" placeholder="es. sentinel-aula-123456">
+          <label class="field-label" for="chiave">Chiave API</label>
+          <input id="chiave" class="field" type="password" autocomplete="off" spellcheck="false" placeholder="Incolla qui la chiave">
+          <div class="action-row" style="margin-top:12px">
+            <span class="help">La chiave resta solo in questa pagina: non viene salvata da nessuna parte.</span>
+            <button id="inserisci" class="primary" type="button">Inserisci</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <h2>Componi l'immagine</h2>
+            <span class="format" id="costo">circa 0,12 € a immagine</span>
+          </div>
+          <form id="modulo">
+            <label class="field-label" for="prompt">Descrivi l'immagine</label>
+            <textarea id="prompt" class="field" rows="4" maxlength="8000" placeholder="Una tazza di ceramica gialla su un tavolo blu, luce da studio…" disabled></textarea>
+            <div class="row2">
+              <div>
+                <label class="field-label" for="formato">Formato</label>
+                <select id="formato" class="field format-select" disabled>
+                  <option>Auto</option><option>1:1</option><option>3:4</option><option>4:3</option><option>2:3</option>
+                  <option>3:2</option><option>9:16</option><option>16:9</option><option>4:5</option><option>5:4</option><option>21:9</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="risoluzione">Risoluzione</label>
+                <select id="risoluzione" class="field format-select" disabled>
+                  <option>1K</option><option selected>2K</option><option>4K</option>
+                </select>
+              </div>
+            </div>
+            <label class="field-label" for="reference">Immagini di riferimento <span class="help">(facoltative, fino a 6)</span></label>
+            <input id="reference" class="file-input" type="file" accept="image/png,image/jpeg,image/webp" multiple disabled>
+            <div id="refs" class="refs"></div>
+            <div class="action-row" style="margin-top:14px">
+              <span class="help" id="nota">Prima inserisci la chiave.</span>
+              <button id="genera" class="primary" type="submit" disabled>Genera</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <section class="preview">
+        <div class="section-head preview-head">
+          <h2>Risultato</h2>
+          <a id="salva" class="quiet" download hidden>Salva immagine</a>
+        </div>
+        <div class="canvas">
+          <div id="vuoto" class="empty">
+            <p>Qui appare la tua immagine</p>
+            <span>Inserisci la chiave e scrivi un prompt.</span>
+          </div>
+          <img id="risultato" alt="Immagine generata" hidden>
+        </div>
+        <p id="messaggio" class="status" role="status" aria-live="polite">Apri questa pagina in una finestra in incognito.</p>
+        <div id="galleria" class="gallery"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
