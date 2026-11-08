@@ -77,6 +77,10 @@
     .riapri { display: none; margin-left: auto; background: none; border: 0; font: inherit; font-size: .9rem; color: var(--tenue); text-decoration: underline; cursor: pointer; }
     .p.fatto .riapri { display: inline; }
 
+    .idbox { margin: 14px 0 4px; padding: 14px 16px; border-radius: 12px; background: #fff6cc; border: 2px solid var(--giallo-scuro); }
+    .idbox input { display: block; width: 100%; margin-top: 8px; padding: 12px 14px; font: 600 1.05rem ui-monospace, Consolas, monospace;
+                   border: 2px solid var(--testo); border-radius: 10px; background: #fff; }
+    #id-ok { display: block; margin-top: 6px; font-size: .95rem; }
     .aiuto li { padding: 8px 0; }
     .aiuto b { display: block; }
     .fine { text-align: center; margin-top: 30px; color: var(--tenue); }
@@ -118,21 +122,27 @@
           <li>Se Google chiede la <b>verifica in due passaggi</b>, falla: tieni a portata di mano il <b>telefono</b> e segui le istruzioni. È normale, serve per la sicurezza</li>
         </ol>
         <div class="attenzione">💳 Usa una carta di credito o di debito, <b>non PayPal</b>. Con PayPal Google può chiedere un pagamento anticipato.</div>
-        <div class="bene">✅ Hai finito quando vedi la pagina <b>«Ti diamo il benvenuto»</b> con la scritta <b>«Stai usando la prova senza costi»</b>.</div>
+        <div class="bene">✅ Hai finito quando sei dentro <b>Google Cloud</b>: in alto vedi il pulsante <b>«Seleziona un progetto»</b>. È normale che la pagina sia quasi vuota.</div>
         <button class="ok" type="button">Fatto, vado avanti</button>
       </div>
     </section>
 
     <section class="p" data-p="2">
-      <div class="cima"><div class="n">2</div><h2>Copia il nome del progetto</h2><button class="riapri" type="button">Riapri</button></div>
+      <div class="cima"><div class="n">2</div><h2>Crea il tuo progetto</h2><button class="riapri" type="button">Riapri</button></div>
       <div class="corpo">
-        <a class="apri" href="https://console.cloud.google.com/welcome" target="_blank" rel="noopener">Apri la pagina ↗</a>
+        <p class="perche">Il progetto è la tua cartella su Google Cloud. Dentro ci metteremo Nano Banana Pro.</p>
+        <a class="apri" href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener">Apri la pagina ↗</a>
         <ol class="az">
-          <li>Si apre la pagina <b>«Ti diamo il benvenuto»</b></li>
-          <li>Cerca la scritta <b>«Stai lavorando al progetto»</b>. Sotto c'è <b>ID:</b> e una parola con numeri, per esempio <span class="scrivi">my-first-project-123456</span></li>
-          <li><b>Scrivila sul foglio</b>, lettera per lettera</li>
+          <li>Si apre la pagina <b>«Nuovo progetto»</b>. Nella casella <b>Nome progetto</b> scrivi <span class="scrivi">sentinel</span></li>
+          <li>Subito sotto compare <b>ID progetto:</b> con una parola e dei numeri, per esempio <span class="scrivi">sentinel-123456</span>. <b>Scrivila sul foglio</b>, lettera per lettera. Non premere «Modifica»</li>
+          <li>Se c'è una casella <b>Account di fatturazione</b>, lascia quello già scelto</li>
+          <li>Premi <span class="t">Crea</span> e aspetta qualche secondo</li>
         </ol>
-        <p class="perche">Nella stessa pagina vedi anche quanto credito ti resta.</p>
+        <div class="idbox">
+          <label for="mio-id"><b>Scrivi qui anche il tuo ID progetto</b>: così i prossimi pulsanti blu aprono direttamente il tuo progetto.</label>
+          <input id="mio-id" type="text" autocomplete="off" spellcheck="false" placeholder="sentinel-123456">
+          <span id="id-ok"></span>
+        </div>
         <button class="ok" type="button">Fatto, vado avanti</button>
       </div>
     </section>
@@ -270,6 +280,20 @@
         p.querySelector(".riapri").onclick = () => { fatti.delete(p.dataset.p); aggiorna(false); };
       }
       aggiorna(false);
+
+      // ID progetto: aggiunto ai link dei passi 3-5, così si aprono sul progetto giusto anche su un account nuovo.
+      const campo = document.getElementById("mio-id"), esito = document.getElementById("id-ok");
+      const link = [...document.querySelectorAll('a.apri[href*="console.cloud.google.com"]')].filter((a) => !a.href.includes("projectcreate"));
+      link.forEach((a) => a.dataset.base = a.href.split("?")[0]);
+      function applica() {
+        const id = campo.value.trim().toLowerCase();
+        const buono = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/.test(id);
+        link.forEach((a) => a.href = buono ? a.dataset.base + "?project=" + id : a.dataset.base);
+        esito.textContent = !id ? "" : buono ? "✅ Fatto: i pulsanti blu ora aprono il progetto " + id : "Controlla: è tutto minuscolo, con trattini e numeri.";
+        try { localStorage.setItem("guida-sentinel-id", id); } catch {}
+      }
+      try { campo.value = localStorage.getItem("guida-sentinel-id") || ""; } catch {}
+      campo.addEventListener("input", applica); applica();
     })();
   </script>
 </body>
